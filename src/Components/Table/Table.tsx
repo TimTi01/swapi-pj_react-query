@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { useGetData } from "../../Hooks/useGetData";
 import TablePageCounter from "./TablePageCounter";
 
 export default function Table() {
-    const {data, error, isLoading} = useGetData(1)
+    const [page, setPage] = useState(1)
+    const {data, error, isLoading} = useGetData(page)
+    const dataCount = data?.count || 2
+    const dataResult = data?.results || []
+
+    const changePage = (pageNumber: number) => {
+        setPage(pageNumber)
+    }
     
     if(isLoading) return <div>'Loading...'</div>
     if(error) return <div>Error: {error}</div>
@@ -42,6 +49,12 @@ export default function Table() {
 
                     </tbody>
                 </table>
-                <TablePageCounter/>
+
+                <TablePageCounter 
+                    dataCount={dataCount}
+                    dataResult={dataResult} 
+                    page={page} 
+                    onPageClick={changePage}
+                />
             </div>
 }

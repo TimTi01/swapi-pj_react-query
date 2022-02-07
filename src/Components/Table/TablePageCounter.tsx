@@ -1,24 +1,19 @@
 import React from 'react';
-import { useGetData, useGetDataMutation } from "../../Hooks/useGetData";
+import { TabelPageCounterProps } from '../../Types/typeUseGetData';
 
-export default function TablePageCounter() {
-    const {data} = useGetData(1)
-    const {mutate} = useGetDataMutation();
-    const numberOfpages = Math.ceil(data ? data.count / data.results.length : 2);
+export default function TablePageCounter({dataCount, dataResult, page, onPageClick}: TabelPageCounterProps) {
+    const numberOfpages = Math.ceil(dataCount / dataResult.length);
+    
     const arrNumberOfpages = Array.from(Array(numberOfpages).keys()).slice(1)
-
-    console.log(numberOfpages);
-    console.log(arrNumberOfpages);
     
     return <div style={{display: 'flex'}}>
                 {arrNumberOfpages.map(pageNumber => (
-                    <div key={pageNumber}
+                    <button key={pageNumber}
                           style={{marginRight: '5px'}}
-                          onClick={() => mutate(pageNumber)}
+                          onClick={() => onPageClick(pageNumber)}
                     >
                         {pageNumber}
-                    </div> 
+                    </button> 
                 ))}
-
            </div>;
 }

@@ -38,3 +38,10 @@ export type TypeUseGetData = {
 export type TypeUseGetDataError = {
     'message': string,
 }
+
+export type TabelPageCounterProps = {
+    dataCount: number
+    dataResult: any[]
+    page: number
+    onPageClick: (pageNumber: number) => void
+}
